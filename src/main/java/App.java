@@ -7,6 +7,33 @@ import static spark.Spark.*;
 
 public class App {
   public static void main(String[] args) {
+    staticFileLocation("/public");
+    String layout = "templates/layout.vtl";
 
+    get("/", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      model.put("template", "templates/name.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/home",(request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+
+      String name = request.queryParams("petName");
+      Tamagotchi myTamagotchi = new Tamagotchi(name);
+      int activity = myTamagotchi.getActivityLevel();
+      int food = myTamagotchi.getFoodLevel();
+      int sleep = myTamagotchi.getSleepLevel();
+      int health = myTamagotchi.getHealthLevel();
+
+      model.put("name", name);
+      model.put("activity", activity);
+      model.put("food", food);
+      model.put("sleep", sleep);
+      model.put("health", health);
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }
