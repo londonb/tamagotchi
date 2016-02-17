@@ -17,11 +17,20 @@
 
 <hr>
 
-<!-- <h1>Love your $name!</h1>
+<h1>Love $name back:</h1>
 
 <form action="/results" method="post">
   <div>
-    <label for="nameInput">Name your new pet</label>
-    <input type="nameInput">
+    <label for="play">Play with $name</label>
+    <input type="number" name="play" placeholder="times per day">
   </div>
-</form> -->
+  <div>
+    <label for="feed">Feed $name</label>
+    <input type="number" name="feed" placeholder="times per day">
+  </div>
+  <div>
+    <label for="nap">Put $name down for a nap</label>
+    <input type="number" name="nap" placeholder="times per day">
+  </div>
+  <button type="submit" class="btn btn-default">next day</button>
+</form>

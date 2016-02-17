@@ -20,8 +20,10 @@ public class App {
     post("/home",(request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
+
       String name = request.queryParams("petName");
       Tamagotchi myTamagotchi = new Tamagotchi(name);
+      request.session().attribute("Tamagotchi", myTamagotchi);
       int activity = myTamagotchi.getActivityLevel();
       int food = myTamagotchi.getFoodLevel();
       int sleep = myTamagotchi.getSleepLevel();
@@ -32,6 +34,30 @@ public class App {
       model.put("food", food);
       model.put("sleep", sleep);
       model.put("health", health);
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/results", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Tamagotchi myTamagotchi = request.session().attribute("Tamagotchi");
+
+      myTamagotchi.timePasses();
+
+      //integer int string problem remains
+
+      for (int i=1; i <= int.parseInt(request.queryParams("feed")); i++) {
+        myTamagotchi.feed();
+      }
+      for (int i=1; i <= int.parseInt(request.queryParams("play")); i++) {
+        myTamagotchi.feed();
+      }
+      for (int i=1; i <= int.parseInt(request.queryParams("nap")); i++) {
+        myTamagotchi.feed();
+      }
+
+      request.session().attribute("Tamagotchi", myTamagotchi);
+
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

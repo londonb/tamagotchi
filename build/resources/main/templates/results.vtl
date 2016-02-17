@@ -1,0 +1,10 @@
+#if ($myTamagotchi.isAlive())
+  <h1>Your pet survived the night!</h1>
+#else
+  <h1>Shame!Your pet, $name, is dead!</h1>
+#end
+<hr>
+<h2>Play with $name again!</h2>
+<form action="/index">
+  <button type="submit" class="btn btn-default">Have fun with $name</button>
+</form>
